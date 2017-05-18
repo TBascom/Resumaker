@@ -1,0 +1,181 @@
+
+//Resumaker.cpp - Gets input from the user and makes a resumé
+//Created by Group 1 for Quarter 4 Final Project
+
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+//Function prototypes
+void resumeBuilder();
+
+int main()
+{
+	//Call function if menu choice = 1
+	resumeBuilder();
+	
+	return 0;
+}//end of main function
+
+//Function definitions
+void resumeBuilder()
+{
+	//Declare variables
+	char end = ' ';
+	int count = 0;
+	//Basic
+	const string nameq = "Name: ";
+	const string addressq = "Full address: ";
+	const string phonenumberq = "Phone number: ";
+	const string emailq = "Email address: ";
+	string name = " ";
+	string address = " ";
+	string phonenumber = " ";
+	string email = " ";
+	//Work
+	const string work = "Work Experience: ";
+	const string workq1 = "Employer/Company name: ";
+	const string workq2 = "Dates of employment: ";
+	const string workq3 = "Job title, description, responsibility: ";
+	string worka1 = " ";
+	string worka2 = " ";
+	string worka3 = " ";
+	//Education
+	const string edu = "Education: ";
+	const string eduq1 = "School name: ";
+	const string eduq2 = "Dates of attendance: ";
+	string edua1 = " ";
+	string edua2 = " ";
+	//Achievements or Awards
+	const string awards = "Achievements or Awards: ";
+	const string awardsq1 = "Last employment, academic, or other achivements: ";
+	string awardsa1 = " ";
+	//Skills
+	const string skills = "Skills: ";
+	const string skillsq1 = "Computer, language, or other skills: ";
+	string skillsa1 = " ";
+
+	//Declare file
+	ofstream outFile;
+
+	//Open the file
+	outFile.open("Resumé.txt", ios::out);
+
+	//Check if file opened, run program if it did
+	if (outFile.is_open())
+	{
+		//Start asking questions and storing answers in document
+		cout << "This part of the program will ask you basic questions found on a resume,\nthen store the answers in a text file called Resume.txt." << endl;
+		//Basics
+		cout << nameq;
+		getline(cin, name);
+		outFile << nameq << name << endl;
+		cout << addressq;
+		getline(cin, address);
+		outFile << addressq << address << endl;
+		cout << phonenumberq;
+		getline(cin, phonenumber);
+		outFile << phonenumberq << phonenumber << endl;
+		cout << emailq;
+		getline(cin, email);
+		outFile << emailq << email << endl << endl << endl;
+
+		//Work experience
+		cout << work << endl;
+		outFile << work << endl;
+		//Loop while user has more jobs to add
+		while (end != 'N')
+		{
+			if (count >= 1)
+			{
+				cin.ignore(100, '\n');
+			}//end if
+			cout << workq1;
+			getline(cin, worka1);
+			outFile << workq1 << worka1 << endl;
+			cout << workq2;
+			getline(cin, worka2);
+			outFile << workq2 << worka2 << endl;
+			cout << workq3;
+			getline(cin, worka3);
+			outFile << workq3 << worka3 << endl;
+			cout << "Do you have more jobs to put in, and would like to repeat the last 3 questions?\n(Y/N): ";
+			cin >> end;
+			end = toupper(end);
+			count += 1;
+			//Space seperate jobs
+			if (end != 'N')
+			{
+				outFile << endl;
+			}
+		}//end while
+		//reset control variables
+		end = 'n';
+		count = 0;
+
+		//Education
+		outFile << endl << endl;
+		cout << endl;
+		cout << edu << endl;
+		outFile << edu << endl;
+		cin.ignore(100, '\n');
+		cout << eduq1;
+		getline(cin, edua1);
+		outFile << eduq1 << edua1 << endl;
+		cout << eduq2;
+		getline(cin, edua2);
+		outFile << eduq2 << edua2 << endl << endl << endl;
+
+		//Achievements or awards
+		cout << awards << endl;
+		outFile << awards << endl;
+		//Loop while user has more awards to add
+		while (end != 'N')
+		{
+			if (count >= 1)
+			{
+				cin.ignore(100, '\n');
+			}//end if
+			cout << awardsq1;
+			getline(cin, awardsa1);
+			outFile << awardsq1 << awardsa1 << endl;
+			cout << "Do you have more achievements or awards to put in, and would like to repeat the last question?(Y/N): ";
+			cin >> end;
+			end = toupper(end);
+			count += 1;
+		}//end loop
+		//reset control variables
+		end = 'n';
+		count = 0;
+		cin.ignore(100, '\n');
+
+		//Skills
+		outFile << endl << endl;
+		cout << skills << endl;
+		outFile << skills << endl;
+		//Loop while user has more awards to add
+		while (end != 'N')
+		{
+			if (count >= 1)
+			{
+				cin.ignore(100, '\n');
+			}//end if
+			cout << skillsq1;
+			getline(cin, skillsa1);
+			outFile << skillsq1 << skillsa1 << endl;
+			cout << "Do you have more skills to put in, and would like to repeat the last question?\n(Y/N): ";
+			cin >> end;
+			end = toupper(end);
+			count += 1;
+		}//end loop
+
+		//If user finishes, display message
+		cout << "Your resume is finished. Thank you for using this program. " << endl;
+
+	}
+	else
+	{
+		cout << "File could not be opened.";
+	}
+}
